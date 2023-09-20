@@ -45,6 +45,7 @@ export const CreateGame = () => {
       gameType: gameType,
       createdAt: new Date(),
     };
+    debugger;
     const newGameId = await addNewGame(game);
     if (newGameId) {
       setLoading(false);
