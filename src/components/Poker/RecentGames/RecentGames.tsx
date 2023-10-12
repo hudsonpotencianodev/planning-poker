@@ -2,6 +2,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Grow,
   Table,
   TableBody,
   TableCell,
@@ -20,11 +21,13 @@ import { removeGame } from '../../../service/games';
 import { isModerator } from '../../../utils/isModerator';
 import { AlertDialog } from '../../../components/AlertDialog/AlertDialog';
 import { PlayerGame } from '../../../types/player';
+import { useTranslation } from 'react-i18next';
 
 export const RecentGames = () => {
   const history = useHistory();
   const [recentGames, setRecentGames] = useState<PlayerGame[] | undefined>(undefined);
   const [reloadRecent, setReloadRecent] = useState<Boolean>(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     let fetchCleanup = true;
@@ -59,57 +62,59 @@ export const RecentGames = () => {
   };
 
   return (
-    <Card variant='outlined' className='RecentGamesCard'>
-      <CardHeader
-        className='RecentGamesCardTitle'
-        title='Recent Session'
-        titleTypographyProps={{ variant: 'h6', noWrap: true }}
-      />
-      <CardContent className='RecentGamesCardContent'>
-        {isEmptyRecentGames() && <Typography variant='body2'>No recent sessions found</Typography>}
-        {recentGames && recentGames.length > 0 && (
-          <TableContainer className='RecentGamesTableContainer'>
-            <Table stickyHeader>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Created By</TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {recentGames.map(
-                  (recentGame) =>
-                    recentGame.name && (
-                      <TableRow
-                        hover
-                        key={recentGame.id}
-                        className='RecentGamesTableRow'
-                        onClick={() => history.push(`/game/${recentGame.id}`)}
-                      >
-                        <TableCell>{recentGame.name}</TableCell>
-                        <TableCell align='left'>{recentGame.createdBy}</TableCell>
-                        {isModerator(recentGame.createdById, getCurrentPlayerId(recentGame.id)) ? (
-                          <TableCell align='center' onClick={(e) => e.stopPropagation()}>
-                            <AlertDialog
-                              title='Remove recent game'
-                              message={`Are you sure? That will delete the game: ${recentGame.name} and remove all players from the session.`}
-                              onConfirm={() => handleRemoveGame(recentGame.id)}
-                            >
-                              <DeleteForeverIcon style={{ color: red[300] }} />
-                            </AlertDialog>
-                          </TableCell>
-                        ) : (
-                          <TableCell align='left'></TableCell>
-                        )}
-                      </TableRow>
-                    )
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
-      </CardContent>
-    </Card>
+    <Grow in={true} enter timeout={2000}>
+      <Card variant='outlined' className='RecentGamesCard'>
+        <CardHeader
+          className='RecentGamesCardTitle'
+          title={t('HomePage.heroSection.recentSession')}
+          titleTypographyProps={{ variant: 'h6', noWrap: true }}
+        />
+        <CardContent className='RecentGamesCardContent'>
+          {isEmptyRecentGames() && <Typography variant='body2'>No recent sessions found</Typography>}
+          {recentGames && recentGames.length > 0 && (
+            <TableContainer className='RecentGamesTableContainer'>
+              <Table stickyHeader>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Created By</TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {recentGames.map(
+                    (recentGame) =>
+                      recentGame.name && (
+                        <TableRow
+                          hover
+                          key={recentGame.id}
+                          className='RecentGamesTableRow'
+                          onClick={() => history.push(`/game/${recentGame.id}`)}
+                        >
+                          <TableCell>{recentGame.name}</TableCell>
+                          <TableCell align='left'>{recentGame.createdBy}</TableCell>
+                          {isModerator(recentGame.createdById, getCurrentPlayerId(recentGame.id)) ? (
+                            <TableCell align='center' onClick={(e) => e.stopPropagation()}>
+                              <AlertDialog
+                                title='Remove recent game'
+                                message={`Are you sure? That will delete the game: ${recentGame.name} and remove all players from the session.`}
+                                onConfirm={() => handleRemoveGame(recentGame.id)}
+                              >
+                                <DeleteForeverIcon style={{ color: red[300] }} />
+                              </AlertDialog>
+                            </TableCell>
+                          ) : (
+                            <TableCell align='left'></TableCell>
+                          )}
+                        </TableRow>
+                      )
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </CardContent>
+      </Card>
+    </Grow>
   );
 };

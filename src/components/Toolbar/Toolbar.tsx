@@ -28,40 +28,11 @@ export const Toolbar = () => {
           <div className='HeaderContainer'>
             <div className='HeaderLeftContainer' onClick={() => history.push('/')}>
               <GamesIcon className='HeaderIcon' />
-              <Typography variant={isSmallScreen ? 'subtitle1' : 'h5'} color='inherit' noWrap>
+              <Typography variant={isSmallScreen ? 'subtitle1' : 'h5'} color='primary' noWrap>
                 {title}
               </Typography>
             </div>
             <div>
-              <Button
-                title={t('toolbar.menu.newSession')}
-                startIcon={<AddCircleOutlineIcon />}
-                color='inherit'
-                onClick={() => history.push('/')}
-                data-testid='toolbar.menu.newSession'
-              >
-                {!isSmallScreen ? t('toolbar.menu.newSession') : null}
-              </Button>
-              <Button
-                title={t('toolbar.menu.joinSession')}
-                startIcon={<MergeTypeOutlinedIcon />}
-                size={isSmallScreen ? 'small' : 'large'}
-                color='inherit'
-                onClick={() => history.push('/join')}
-                data-testid='toolbar.menu.joinSession'
-              >
-                {!isSmallScreen ? t('toolbar.menu.joinSession') : null}
-              </Button>
-
-              <Button
-                id='github-button'
-                color='inherit'
-                onClick={() =>
-                  (window.location.href = 'https://github.com/hudsonpotenciano/planning-poker')
-                }
-              >
-                <GithubIcon></GithubIcon>
-              </Button>
               {!isSmallScreen && <LanguageControl />}
             </div>
           </div>

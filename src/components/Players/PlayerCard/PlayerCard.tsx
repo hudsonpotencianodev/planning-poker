@@ -1,14 +1,14 @@
 import { Card, CardContent, CardHeader, IconButton, Typography } from '@material-ui/core';
 import React from 'react';
-import { Game, GameType } from '../../../types/game';
+import { Game } from '../../../types/game';
 import { Player } from '../../../types/player';
 import { Status } from '../../../types/status';
-import { getCards } from '../CardPicker/CardConfigs';
 import './PlayerCard.css';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForeverTwoTone';
 import { red } from '@material-ui/core/colors';
 import { removePlayer } from '../../../service/players';
 import { isModerator } from '../../../utils/isModerator';
+import { fibonacciCards } from '../CardPicker/CardConfigs';
 
 interface PlayerCardProps {
   game: Game;
@@ -61,11 +61,15 @@ const getCardColor = (game: Game, value: number | undefined): string => {
   if (game.gameStatus !== Status.Finished) {
     return 'var(--color-background-secondary)';
   }
-  const card = getCards(game.gameType).find((card) => card.value === value);
+  const card = fibonacciCards.find((card) => card.value === value);
   return card ? card.color : 'var(--color-background-secondary)';
 };
 
 const getCardValue = (player: Player, game: Game) => {
+  if(isModerator(game.createdById,player.id)){
+    return '👑';
+  } 
+
   if (game.gameStatus !== Status.Finished) {
     return player.status === Status.Finished ? '👍' : '🤔';
   }
@@ -75,15 +79,14 @@ const getCardValue = (player: Player, game: Game) => {
       if (player.value && player.value === -1) {
         return player.emoji || '☕'; // coffee emoji
       }
-      return getCardDisplayValue(game.gameType, player.value);
+      return getCardDisplayValue(player.value);
     }
     return '🤔';
   }
 };
 
 const getCardDisplayValue = (
-  gameType: GameType | undefined,
   cardValue: number | undefined
 ): string | number | undefined => {
-  return getCards(gameType).find((card) => card.value === cardValue)?.displayValue || cardValue;
+  return fibonacciCards.find((card) => card.value === cardValue)?.displayValue || cardValue;
 };

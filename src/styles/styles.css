@@ -1,8 +1,18 @@
 .LightTheme{
-    --color-primary : #75A1DE;
-    --color-secondary:#d7d7d7;
+    --color-primary : #88d110;
+    --color-secondary:#222222;
     --color-background: white;
-    --color-background-secondary: #e7edf3;
+    --color-background-secondary: #f5f5f5;
     --color-warning:orangered;
     --color-border:grey;
+    --color-hover:rgba(135, 209, 16, 0.48);
 }
+
+/* .DarkTheme {
+    --color-primary : #C1FA64;
+    --color-secondary:#FBFBFB;
+    --color-background: #222222;
+    --color-background-secondary: #373737;
+    --color-warning:orangered;
+    --color-border:#FBFBFB;
+} */

@@ -5,6 +5,8 @@ import { CardPicker } from '../../Players/CardPicker/CardPicker';
 import { Players } from '../../Players/Players';
 import { GameController } from '../GameController/GameController';
 import './GameArea.css';
+import { isModerator } from '../../../utils/isModerator';
+import Grid from '@material-ui/core/Grid';
 
 interface GameAreaProps {
   game: Game;
@@ -13,15 +15,17 @@ interface GameAreaProps {
 }
 export const GameArea: React.FC<GameAreaProps> = ({ game, players, currentPlayerId }) => {
   return (
-    <>
-      <div className='ContentArea'>
+    <Grid container justify='center' alignItems='center' alignContent='center' direction='column'>
+      <Grid item>
         <Players game={game} players={players} currentPlayerId={currentPlayerId} />
         <GameController game={game} currentPlayerId={currentPlayerId} />
-      </div>
-      <div className='Footer'>
-        <CardPicker game={game} players={players} currentPlayerId={currentPlayerId} />
-      </div>
-    </>
+      </Grid>
+      <Grid item>
+        {!isModerator(game.createdById, currentPlayerId) &&
+          <CardPicker game={game} players={players} currentPlayerId={currentPlayerId} />
+        }
+      </Grid>
+    </Grid>
   );
 };
 

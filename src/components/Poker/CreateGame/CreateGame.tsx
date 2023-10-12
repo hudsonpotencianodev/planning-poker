@@ -11,27 +11,16 @@ import {
   TextField,
 } from '@material-ui/core';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { uniqueNamesGenerator, Config, starWars, colors, animals } from 'unique-names-generator';
 import { useHistory } from 'react-router-dom';
 import { addNewGame } from '../../../service/games';
-import { GameType, NewGame } from '../../../types/game';
+import { NewGame } from '../../../types/game';
 import './CreateGame.css';
 import { useTranslation } from 'react-i18next';
 
-const gameNameConfig: Config = {
-  dictionaries: [colors, animals],
-  separator: ' ',
-  style: 'capital',
-};
-const userNameConfig: Config = {
-  dictionaries: [starWars],
-};
-
 export const CreateGame = () => {
   const history = useHistory();
-  const [gameName, setGameName] = useState(uniqueNamesGenerator(gameNameConfig));
-  const [createdBy, setCreatedBy] = useState(uniqueNamesGenerator(userNameConfig));
-  const [gameType, setGameType] = useState(GameType.Fibonacci);
+  const [gameName, setGameName] = useState('');
+  const [createdBy, setCreatedBy] = useState('');
   const [hasDefaults, setHasDefaults] = useState({ game: true, name: true });
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
@@ -42,10 +31,8 @@ export const CreateGame = () => {
     const game: NewGame = {
       name: gameName,
       createdBy: createdBy,
-      gameType: gameType,
       createdAt: new Date(),
     };
-    debugger;
     const newGameId = await addNewGame(game);
     if (newGameId) {
       setLoading(false);
@@ -69,7 +56,7 @@ export const CreateGame = () => {
   };
 
   return (
-    <Grow in={true} timeout={1000}>
+    <Grow in={true} enter timeout={2000}>
       <form onSubmit={handleSubmit}>
         <Card variant='outlined' className='CreateGameCard'>
           <CardHeader
@@ -79,6 +66,7 @@ export const CreateGame = () => {
           />
           <CardContent className='CreateGameCardContent'>
             <TextField
+              color='primary'
               className='CreateGameTextField'
               required
               id='filled-required'
@@ -90,6 +78,7 @@ export const CreateGame = () => {
               onChange={(event: ChangeEvent<HTMLInputElement>) => setGameName(event.target.value)}
             />
             <TextField
+              color='primary'
               className='CreateGameTextField'
               required
               id='filled-required'
@@ -100,33 +89,6 @@ export const CreateGame = () => {
               variant='outlined'
               onChange={(event: ChangeEvent<HTMLInputElement>) => setCreatedBy(event.target.value)}
             />
-            <RadioGroup
-              aria-label='gender'
-              name='gender1'
-              value={gameType}
-              onChange={(
-                event: ChangeEvent<{
-                  name?: string | undefined;
-                  value: any;
-                }>,
-              ) => setGameType(event.target.value)}
-            >
-              <FormControlLabel
-                value={GameType.Fibonacci}
-                control={<Radio color='primary' size='small' />}
-                label='Fibonacci (0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)'
-              />
-              <FormControlLabel
-                value={GameType.ShortFibonacci}
-                control={<Radio color='primary' size='small' />}
-                label='Short Fibonacci (0, ½, 1, 2, 3, 5, 8, 13, 20, 40, 100)'
-              />
-              <FormControlLabel
-                value={GameType.TShirt}
-                control={<Radio color='primary' size='small' />}
-                label='T-Shirt (XXS, XS, S, M, L, XL, XXL)'
-              />
-            </RadioGroup>
           </CardContent>
           <CardActions className='CreateGameCardAction'>
             <Button

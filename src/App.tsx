@@ -7,9 +7,10 @@ import { theme } from './service/theme';
 import JoinPage from './pages/JoinPage/JoinPage';
 
 import { Toolbar } from './components/Toolbar/Toolbar';
+import Layout from './components/Layout/Layout';
 function App() {
   return (
-    <main className='LightTheme'>
+    <Layout>
       <ThemeProvider theme={theme}>
         <StylesProvider injectFirst>
           <CssBaseline />
@@ -23,7 +24,7 @@ function App() {
           </Router>
         </StylesProvider>
       </ThemeProvider>
-    </main>
+    </Layout>
   );
 }
 

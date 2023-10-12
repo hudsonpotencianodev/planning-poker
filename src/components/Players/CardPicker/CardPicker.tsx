@@ -4,7 +4,7 @@ import { updatePlayerValue } from '../../../service/players';
 import { Game } from '../../../types/game';
 import { Player } from '../../../types/player';
 import { Status } from '../../../types/status';
-import { CardConfig, getCards, getRandomEmoji } from './CardConfigs';
+import { CardConfig, fibonacciCards, getRandomEmoji } from './CardConfigs';
 import './CardPicker.css';
 
 interface CardPickerProps {
@@ -14,26 +14,27 @@ interface CardPickerProps {
 }
 export const CardPicker: React.FC<CardPickerProps> = ({ game, players, currentPlayerId }) => {
   const [randomEmoji, setRandomEmoji] = useState(getRandomEmoji);
+  
   const playPlayer = (gameId: string, playerId: string, card: CardConfig) => {
     if (game.gameStatus !== Status.Finished) {
       updatePlayerValue(gameId, playerId, card.value, randomEmoji);
     }
   };
-  const cards = getCards(game.gameType);
 
   useEffect(() => {
     if (game.gameStatus === Status.Started) {
       setRandomEmoji(getRandomEmoji);
     }
   }, [game.gameStatus]);
+
   return (
     <Grow in={true} timeout={1000}>
       <div>
         <div className='CardPickerContainer'>
           <Grid container spacing={4} justify='center'>
-            {cards.map((card: CardConfig, index) => (
+            {fibonacciCards.map((card: CardConfig, index) => (
               <Grid key={card.value} item xs>
-                <Slide in={true} direction={'right'} timeout={(1000 * index) / 2}>
+                <Slide in={true} direction={'right'} timeout={(300 * index) / 2}>
                   <Card
                     id={`card-${card.displayValue}`}
                     className='CardPicker'
@@ -75,7 +76,7 @@ export const CardPicker: React.FC<CardPickerProps> = ({ game, players, currentPl
             ))}
           </Grid>
         </div>
-        <Typography variant='h6'>
+        <Typography variant='h6' align='center'>
           {game.gameStatus !== Status.Finished
             ? 'Click on the card to vote'
             : 'Session not ready for Voting! Wait for moderator to start'}

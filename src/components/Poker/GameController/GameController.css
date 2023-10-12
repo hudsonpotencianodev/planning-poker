@@ -41,10 +41,9 @@
 .GameControllerButton {
   display: flex;
   border-radius: 50%;
-  background-color:  var(--color-background);
 }
 .GameControllerButton:hover {
-  box-shadow: rgb(171 207 248) 0px 0px 0px 6px;
+  box-shadow: var(--color-hover) 0px 0px 0px 2px;
 }
 
 .GameControllerCardHeaderAverageContainer {

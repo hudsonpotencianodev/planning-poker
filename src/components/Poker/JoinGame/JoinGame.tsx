@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardHeader, Grow, TextField, Snackbar } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, CardHeader, Grow, TextField, Snackbar, Grid } from '@material-ui/core';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { getGame } from '../../../service/games';
@@ -14,7 +14,7 @@ export const JoinGame = () => {
   const [playerName, setPlayerName] = useState('');
   const [gameFound, setIsGameFound] = useState(true);
   const [showNotExistMessage, setShowNotExistMessage] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,8 +23,11 @@ export const JoinGame = () => {
           setIsGameFound(true);
           if (await isCurrentPlayerInGame(joinGameId)) {
             history.push(`/game/${joinGameId}`);
+            setLoading(false);
+          } else {
+            setLoading(false);
           }
-        }else {
+        } else {
           setShowNotExistMessage(true);
           setTimeout(() => {
             history.push('/');
@@ -51,7 +54,7 @@ export const JoinGame = () => {
 
   return (
     <Grow in={true} timeout={500}>
-      <div>
+      <Grid container justify='center'>
         <form onSubmit={handleSubmit}>
           <Card variant='outlined' className='JoinGameCard'>
             <CardHeader
@@ -98,7 +101,7 @@ export const JoinGame = () => {
         >
           <Alert severity='error'>Session was deleted and doesn't exist anymore!</Alert>
         </Snackbar>
-      </div>
+      </Grid>
     </Grow>
   );
 };

@@ -1,12 +1,12 @@
 import { Grid } from '@material-ui/core';
-import React from 'react';
 import { JoinGame } from '../../components/Poker/JoinGame/JoinGame';
+import './JoinPage.css';
 
 export const JoinPage = () => {
   return (
-    <>
+    <div className="container mx-auto JoinPageContainer align-middle">
       <JoinGame />
-    </>
+    </div>
   );
 };
 

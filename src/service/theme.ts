@@ -5,17 +5,27 @@ import { createMuiTheme } from '@material-ui/core/styles';
 export const customTheme = {
   palette: {
     primary: {
-      main: '#75A1DE',
+      main: '#88d110',
     },
     secondary: {
-      main: '#d7d7d7',
+      main: '#222222',
     },
     error: {
       main: red.A400,
     },
     background: {
-      default: '#fff',
+      default: '#FFFFFF',
     },
+    text: {
+      primary: "#222222",
+      secondary: "#373737",
+    },
+    action: {
+      active: "#FFF"
+    }
   },
+  typography: {
+    fontFamily: 'Poppins'
+  }
 };
 export const theme = createMuiTheme(customTheme);

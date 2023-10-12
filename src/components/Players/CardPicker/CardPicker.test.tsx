@@ -4,10 +4,9 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import * as playersService from '../../../service/players';
-import { Game, GameType } from '../../../types/game';
+import { Game } from '../../../types/game';
 import { Player } from '../../../types/player';
 import { Status } from '../../../types/status';
-import { getCards } from './CardConfigs';
 import { CardPicker } from './CardPicker';
 import * as cardConfigs from './CardConfigs';
 
@@ -18,7 +17,6 @@ describe('CardPicker component', () => {
     name: 'testGame',
     createdBy: 'someone',
     createdAt: new Date(),
-    gameType: GameType.Fibonacci,
     average: 0,
     createdById: 'abc',
     gameStatus: Status.InProgress,
@@ -31,7 +29,7 @@ describe('CardPicker component', () => {
   it('should display correct card values', () => {
     const view = render(<CardPicker game={mockGame} players={mockPlayers} currentPlayerId={currentPlayerId} />);
 
-    getCards(GameType.Fibonacci)
+    cardConfigs.fibonacciCards
       .filter((a) => a.value >= 0)
       .forEach((card) => {
         const cardElement = view.container.querySelector(`#card-${card.displayValue}`);
@@ -40,42 +38,7 @@ describe('CardPicker component', () => {
         expect(cardValueElement.length).toBeGreaterThan(0);
       });
   });
-  it('should display correct card values for ShortFibonacci game type', () => {
-    const view = render(
-      <CardPicker
-        game={{ ...mockGame, gameType: GameType.ShortFibonacci }}
-        players={mockPlayers}
-        currentPlayerId={currentPlayerId}
-      />
-    );
-
-    getCards(GameType.ShortFibonacci)
-      .filter((a) => a.value >= 0)
-      .forEach((card) => {
-        const cardElement = view.container.querySelector(`#card-${card.displayValue}`);
-        expect(cardElement).toBeInTheDocument();
-        const cardValueElement = screen.queryAllByText(card.displayValue);
-        expect(cardValueElement.length).toBeGreaterThan(0);
-      });
-  });
-  it('should display correct card values TShirt game type', () => {
-    const view = render(
-      <CardPicker
-        game={{ ...mockGame, gameType: GameType.TShirt }}
-        players={mockPlayers}
-        currentPlayerId={currentPlayerId}
-      />
-    );
-
-    getCards(GameType.TShirt)
-      .filter((a) => a.value >= 0)
-      .forEach((card) => {
-        const cardElement = view.container.querySelector(`#card-${card.displayValue}`);
-        expect(cardElement).toBeInTheDocument();
-        const cardValueElement = screen.queryAllByText(card.displayValue);
-        expect(cardValueElement.length).toBeGreaterThan(0);
-      });
-  });
+  
   it('should update player value when player clicks on a card', () => {
     const currentPlayerId = mockPlayers[0].id;
     const updatePlayerValueSpy = jest.spyOn(playersService, 'updatePlayerValue');

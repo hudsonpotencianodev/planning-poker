@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { Game, GameType } from '../../../types/game';
+import { Game } from '../../../types/game';
 import { Status } from '../../../types/status';
 import { GameController } from './GameController';
 import * as gamesService from '../../../service/games';
@@ -40,18 +40,6 @@ describe('GameController component', () => {
     render(<GameController game={mockGame} currentPlayerId={mockCurrentPlayerId} />);
 
     expect(screen.getByText(mockGame.average)).toBeInTheDocument();
-  });
-  it('should display game average for non TShirtGameType', () => {
-    render(
-      <GameController game={{ ...mockGame, gameType: GameType.ShortFibonacci }} currentPlayerId={mockCurrentPlayerId} />
-    );
-
-    expect(screen.getByText('Average:')).toBeInTheDocument();
-  });
-  it('should not display game average for TShirt GameType', () => {
-    render(<GameController game={{ ...mockGame, gameType: GameType.TShirt }} currentPlayerId={mockCurrentPlayerId} />);
-
-    expect(screen.queryByText('Average:')).not.toBeInTheDocument();
   });
   it('should display exit option', () => {
     render(<GameController game={mockGame} currentPlayerId={mockCurrentPlayerId} />);
