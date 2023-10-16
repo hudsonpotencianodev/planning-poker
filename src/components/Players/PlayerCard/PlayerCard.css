@@ -9,7 +9,8 @@
   background-color: var(--color-background-secondary);
   margin-top: 40px;
   transition: 0.3s;
-  border-radius: 4px;
+  border-radius: 15px;
+  box-shadow: var(--color-card-boxshadow);
 }
 
 .PlayerCardTitle {
@@ -17,7 +18,7 @@
   text-align: center;
   border-radius: 16px;
   border: 2px solid var(--color-primary);
-  background-color:  var(--color-background);
+  background-color:  var(--color-background-secondary);
   margin: -20px auto 0;
   width: 88%;
   padding: 16px;

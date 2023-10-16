@@ -1,13 +1,14 @@
 .AppBar {
-  box-shadow: none;
-  background-color:  var(--color-background);
+  background-color: var(--color-background);
   flex-grow: 1;
   white-space: nowrap;
+  box-shadow: var(--color-card-boxshadow);
 }
 
 .HeaderContainer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
 }
 

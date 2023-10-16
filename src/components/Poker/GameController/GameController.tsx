@@ -50,13 +50,8 @@ export const GameController: React.FC<GameControllerProps> = ({ game, currentPla
             title={game.name}
             titleTypographyProps={{ variant: 'h6' }}
             action={
-              <div className='GameControllerCardHeaderAverageContainer'>
+              <div className='GameControllerCardHeaderContainer'>
                 <Typography variant='subtitle1'>{game.gameStatus}</Typography>
-                <Divider className='GameControllerDivider' orientation='vertical' flexItem />
-                <Typography variant='subtitle1'>Average:</Typography>
-                <Typography variant='subtitle1' className='GameControllerCardHeaderAverageValue'>
-                  {game.average || 0}
-                </Typography>
               </div>
             }
             className='GameControllerCardTitle'

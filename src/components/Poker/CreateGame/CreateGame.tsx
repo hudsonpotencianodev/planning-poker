@@ -3,14 +3,9 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader,
-  FormControlLabel,
-  Grow,
-  Radio,
-  RadioGroup,
-  TextField,
+  CardHeader, Grid, Grow, TextField
 } from '@material-ui/core';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { addNewGame } from '../../../service/games';
 import { NewGame } from '../../../types/game';
@@ -60,14 +55,13 @@ export const CreateGame = () => {
       <form onSubmit={handleSubmit}>
         <Card variant='outlined' className='CreateGameCard'>
           <CardHeader
-            className='CreateGameCardHeader'
             title={t('HomePage.heroSection.formNewSession.newSessionHeader')}
             titleTypographyProps={{ variant: 'h4' }}
           />
-          <CardContent className='CreateGameCardContent'>
+          <CardContent>
             <TextField
               color='primary'
-              className='CreateGameTextField'
+              fullWidth
               required
               id='filled-required'
               label={t('HomePage.heroSection.formNewSession.sessionNameLabel')}
@@ -79,7 +73,8 @@ export const CreateGame = () => {
             />
             <TextField
               color='primary'
-              className='CreateGameTextField'
+              margin='normal'
+              fullWidth
               required
               id='filled-required'
               label={t('HomePage.heroSection.formNewSession.yourNameLabel')}
@@ -90,12 +85,12 @@ export const CreateGame = () => {
               onChange={(event: ChangeEvent<HTMLInputElement>) => setCreatedBy(event.target.value)}
             />
           </CardContent>
-          <CardActions className='CreateGameCardAction'>
+          <CardActions>
             <Button
+              fullWidth
               type='submit'
               variant='contained'
               color='primary'
-              className='CreateGameButton'
               data-testid='loading'
               disabled={loading}
             >

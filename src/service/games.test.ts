@@ -6,7 +6,6 @@ import {
   updateGame,
   resetGame,
   finishGame,
-  getAverage,
   getGameStatus,
   updateGameStatus,
 } from './games';
@@ -35,7 +34,6 @@ describe('games service', () => {
   const mockGame = {
     id: 'fee-fii-foo-fum',
     name: 'Cadburys',
-    average: 2,
     gameStatus: Status.NotStarted,
     createdBy: 'Jack',
     createdById: 'beanstalk',
@@ -56,7 +54,7 @@ describe('games service', () => {
   it('should store the new game info in the DB', async () => {
     const fakeGame = { name: 'cherries', createdBy: 'Santa', createdAt: new Date() };
     const resPlayer = { name: fakeGame.createdBy, id: mockUlid, status: Status.NotStarted };
-    const resGame = { ...fakeGame, id: mockUlid, average: 0, createdById: mockUlid, gameStatus: Status.Started };
+    const resGame = { ...fakeGame, id: mockUlid, createdById: mockUlid, gameStatus: Status.Started };
     const gameSpy = jest.spyOn(fb, 'addGameToStore');
     const playerSpy = jest.spyOn(fb, 'addPlayerToGameInStore');
     const updateSpy = jest.spyOn(players, 'updatePlayerGames');
@@ -103,7 +101,7 @@ describe('games service', () => {
 
   describe('reset the game', () => {
     it('should update the game and reset the players', async () => {
-      const expectGame = { average: 0, gameStatus: Status.Started };
+      const expectGame = {  gameStatus: Status.Started };
       jest.spyOn(fb, 'getGameFromStore').mockResolvedValueOnce(mockGame);
       const updateSpy = jest.spyOn(fb, 'updateGameDataInStore');
       const playerSpy = jest.spyOn(players, 'resetPlayers');
@@ -127,16 +125,6 @@ describe('games service', () => {
   });
 
   describe('finish the game', () => {
-    it('update the game with the average and finished status', async () => {
-      jest.spyOn(fb, 'getGameFromStore').mockResolvedValueOnce(mockGame);
-      jest.spyOn(fb, 'getPlayersFromStore').mockResolvedValueOnce(mockPlayers);
-      const spy = jest.spyOn(fb, 'updateGameDataInStore');
-
-      await finishGame(mockId);
-
-      expect(spy).toHaveBeenCalledWith(mockId, expect.objectContaining({ gameStatus: Status.Finished }));
-    });
-
     it("should not touch the DB if the game doesn't exist", async () => {
       jest.spyOn(fb, 'getGameFromStore').mockResolvedValueOnce(undefined);
       jest.spyOn(fb, 'getPlayersFromStore').mockResolvedValueOnce(mockPlayers);
@@ -145,22 +133,6 @@ describe('games service', () => {
       await finishGame(mockId);
 
       expect(spy).toHaveBeenCalledTimes(0);
-    });
-  });
-
-  describe('get the average vote', () => {
-    it("should provide the average of players' votes", () => {
-      const expected = Math.round((finishedPlayers[0].value + finishedPlayers[1].value + finishedPlayers[2].value) / 3);
-
-      const res = getAverage(finishedPlayers);
-
-      expect(res).toEqual(expected);
-    });
-
-    it('should not calculate players who have not finished', () => {
-      const res = getAverage(mockPlayers);
-
-      expect(res).toEqual(mockPlayers[0].value);
     });
   });
 

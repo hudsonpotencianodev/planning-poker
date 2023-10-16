@@ -17,7 +17,6 @@ describe('CardPicker component', () => {
     name: 'testGame',
     createdBy: 'someone',
     createdAt: new Date(),
-    average: 0,
     createdById: 'abc',
     gameStatus: Status.InProgress,
   };

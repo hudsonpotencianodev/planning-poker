@@ -1,28 +1,6 @@
-.CreateGameTextField {
-  padding-bottom: 30px;
-}
-
-.CreateGameButton {
-  width: 70%;
-  border-radius: 40px;
-}
-
 .CreateGameCard {
-  background: transparent;
-  border: none !important;
-  padding: 50px;
-}
-
-.CreateGameCardHeader {
-  text-align: center;
-}
-
-.CreateGameCardContent {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-
-.CreateGameCardAction {
-  justify-content: center;
+  box-shadow: var(--color-card-boxshadow);
+  padding: 10px;
+  border-radius: 15px;
+  width: 500px;
 }

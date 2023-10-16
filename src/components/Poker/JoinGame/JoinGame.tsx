@@ -22,7 +22,7 @@ export const JoinGame = () => {
         if (await getGame(joinGameId)) {
           setIsGameFound(true);
           if (await isCurrentPlayerInGame(joinGameId)) {
-            history.push(`/game/${joinGameId}`);
+            // history.push(`/game/${joinGameId}`);
             setLoading(false);
           } else {
             setLoading(false);

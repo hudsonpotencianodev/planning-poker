@@ -3,11 +3,12 @@ import { CreateGame } from '../../components/Poker/CreateGame/CreateGame';
 import { RecentGames } from '../../components/Poker/RecentGames/RecentGames';
 import './HomePage.css';
 import Container from '@material-ui/core/Container';
+import BuyMeACoffee from '../../components/BuyMeACoffee/BuyMeACoffee';
 
 export const HomePage = () => {
   return (
     <Container className="HomePageContainer">
-      <Grid alignItems='center' justify='center' container>
+      <Grid spacing={3} alignItems='flex-start' justify='center' direction='row' container>
         <Grid item>
           <CreateGame />
         </Grid>
@@ -15,6 +16,7 @@ export const HomePage = () => {
           <RecentGames />
         </Grid>
       </Grid>
+      <BuyMeACoffee />
     </Container >
   );
 };

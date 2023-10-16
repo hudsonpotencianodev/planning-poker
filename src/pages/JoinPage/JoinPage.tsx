@@ -1,12 +1,14 @@
-import { Grid } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
 import { JoinGame } from '../../components/Poker/JoinGame/JoinGame';
 import './JoinPage.css';
+import BuyMeACoffee from '../../components/BuyMeACoffee/BuyMeACoffee';
 
 export const JoinPage = () => {
   return (
-    <div className="container mx-auto JoinPageContainer align-middle">
+    <Container className="container mx-auto JoinPageContainer align-middle">
       <JoinGame />
-    </div>
+      <BuyMeACoffee />
+    </Container>
   );
 };
 

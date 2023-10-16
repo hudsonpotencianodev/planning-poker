@@ -43,7 +43,6 @@ describe('Players service', () => {
   const mockGame = {
     id: 'game-123',
     name: 'Mock Game',
-    average: 3,
     gameStatus: Status.Started,
     createdBy: 'Creatornado',
     createdById: '123-abc',

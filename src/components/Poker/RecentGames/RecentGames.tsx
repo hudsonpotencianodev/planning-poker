@@ -65,14 +65,13 @@ export const RecentGames = () => {
     <Grow in={true} enter timeout={2000}>
       <Card variant='outlined' className='RecentGamesCard'>
         <CardHeader
-          className='RecentGamesCardTitle'
           title={t('HomePage.heroSection.recentSession')}
           titleTypographyProps={{ variant: 'h6', noWrap: true }}
         />
-        <CardContent className='RecentGamesCardContent'>
+        <CardContent>
           {isEmptyRecentGames() && <Typography variant='body2'>No recent sessions found</Typography>}
           {recentGames && recentGames.length > 0 && (
-            <TableContainer className='RecentGamesTableContainer'>
+            <TableContainer>
               <Table stickyHeader>
                 <TableHead>
                   <TableRow>
@@ -88,7 +87,6 @@ export const RecentGames = () => {
                         <TableRow
                           hover
                           key={recentGame.id}
-                          className='RecentGamesTableRow'
                           onClick={() => history.push(`/game/${recentGame.id}`)}
                         >
                           <TableCell>{recentGame.name}</TableCell>

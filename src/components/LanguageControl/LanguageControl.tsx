@@ -27,7 +27,6 @@ export const LanguageControl: React.FC = () => {
         onChange={handleChange}
         displayEmpty
         inputProps={{ 'aria-label': 'Change language' }}
-        className='LanguageControlSelect'
         data-testid='language-control'
       >
         <MenuItem value={'en-US'}>{getUnicodeFlagIcon('US')}</MenuItem>

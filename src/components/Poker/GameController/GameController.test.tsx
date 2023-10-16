@@ -21,7 +21,6 @@ describe('GameController component', () => {
     name: 'testGame',
     createdBy: 'someone',
     createdAt: new Date(),
-    average: 0,
     createdById: 'abc',
     gameStatus: Status.InProgress,
   };
@@ -35,11 +34,6 @@ describe('GameController component', () => {
     render(<GameController game={mockGame} currentPlayerId={mockCurrentPlayerId} />);
 
     expect(screen.getByText(mockGame.gameStatus)).toBeInTheDocument();
-  });
-  it('should display game average value', () => {
-    render(<GameController game={mockGame} currentPlayerId={mockCurrentPlayerId} />);
-
-    expect(screen.getByText(mockGame.average)).toBeInTheDocument();
   });
   it('should display exit option', () => {
     render(<GameController game={mockGame} currentPlayerId={mockCurrentPlayerId} />);

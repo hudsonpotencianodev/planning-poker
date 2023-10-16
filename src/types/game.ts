@@ -3,7 +3,6 @@ import { Status } from './status';
 export interface Game {
   id: string;
   name: string;
-  average: number;
   gameStatus: Status;
   createdBy: string;
   createdById: string;

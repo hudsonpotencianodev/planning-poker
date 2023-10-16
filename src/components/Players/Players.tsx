@@ -1,4 +1,4 @@
-import { Grow } from '@material-ui/core';
+import { Box, Grid, Grow } from '@material-ui/core';
 import React from 'react';
 import { Game } from '../../types/game';
 import { Player } from '../../types/player';
@@ -13,11 +13,11 @@ interface PlayersProps {
 export const Players: React.FC<PlayersProps> = ({ game, players, currentPlayerId }) => {
   return (
     <Grow in={true} timeout={800}>
-      <div className='PlayersContainer'>
+      <Box className='PlayersContainer'>
         {players.map((player: Player) => (
           <PlayerCard key={player.id} game={game} player={player} currentPlayerId={currentPlayerId} />
         ))}
-      </div>
+      </Box>
     </Grow>
   );
 };

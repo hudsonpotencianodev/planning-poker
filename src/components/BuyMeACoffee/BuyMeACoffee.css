@@ -1,0 +1,7 @@
+.BuyMeACoffee{
+    bottom: 5px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    scale: 0.9;
+}

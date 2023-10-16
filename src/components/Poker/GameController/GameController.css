@@ -5,8 +5,9 @@
 }
 
 .GameControllerCard {
-  border-radius: 5px;
+  border-radius: 15px;
   background-color: var(--color-background-secondary);
+  box-shadow: var(--color-card-boxshadow);
 }
 
 .GameControllerCardContentArea {
@@ -25,8 +26,7 @@
 .GameControllerCardTitle {
   display: flex;
   justify-content: flex-start;
-  padding: 0px;
-  padding-left: 20px;
+  padding: 0 20px 0 20px;
   border-bottom: 1px solid var(--color-primary);
   font-weight: bold;
 }
@@ -46,20 +46,11 @@
   box-shadow: var(--color-hover) 0px 0px 0px 2px;
 }
 
-.GameControllerCardHeaderAverageContainer {
+.GameControllerCardHeaderContainer {
   display: flex;
   flex-direction: row;
   margin: 3px;
-  padding-left: 30px;
 }
-
-.GameControllerCardHeaderAverageValue {
-  margin-left: 5px;
-  padding: 0px 5px 0px 5px;
-  color: var(--color-warning);
-  font-weight: bold;
-}
-
 
 .MuiCardHeader-action {
   margin: 0;
