@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, IconButton, Typography } from '@material-ui/core';
 import React from 'react';
-import { Game } from '../../../types/game';
+import { Game, GameType } from '../../../types/game';
 import { Player } from '../../../types/player';
 import { Status } from '../../../types/status';
 import './PlayerCard.css';
@@ -8,7 +8,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForeverTwoTone';
 import { red } from '@material-ui/core/colors';
 import { removePlayer } from '../../../service/players';
 import { isModerator } from '../../../utils/isModerator';
-import { fibonacciCards } from '../CardPicker/CardConfigs';
+import { emptyVoteValue, getCards } from '../CardPicker/CardConfigs';
 
 interface PlayerCardProps {
   game: Game;
@@ -49,7 +49,13 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({ game, player, currentPla
         }
       />
       <CardContent className='PlayerCardContent'>
-        <Typography variant='h2' className='PlayerCardContentMiddle'>
+        <Typography
+          variant='h2'
+          className='PlayerCardContentMiddle'
+          style={{
+            opacity: getCardOpacity(player, game),
+          }}
+        >
           {getCardValue(player, game)}
         </Typography>
       </CardContent>
@@ -61,17 +67,28 @@ const getCardColor = (game: Game, value: number | undefined): string => {
   if (game.gameStatus !== Status.Finished) {
     return 'var(--color-background-secondary)';
   }
-  const card = fibonacciCards.find((card) => card.value === value);
+  const card = getCards(game.gameType).find((card) => card.value === value);
   return card ? card.color : 'var(--color-background-secondary)';
 };
 
+const getCardOpacity = (player: Player, game: Game): number => {
+  if (
+    !isModerator(game.createdById, player.id) &&
+    game.gameStatus === Status.Finished &&
+    player.status !== Status.Finished
+  ) {
+    return 0.5;
+  }
+  return 1;
+};
+
 const getCardValue = (player: Player, game: Game) => {
-  if(isModerator(game.createdById,player.id)){
+  if (isModerator(game.createdById, player.id) && !game.canModeratorVote) {
     return '👑';
-  } 
+  }
 
   if (game.gameStatus !== Status.Finished) {
-    return player.status === Status.Finished ? '👍' : '🤔';
+    return player.status === Status.Finished ? '✅' : '💭';
   }
 
   if (game.gameStatus === Status.Finished) {
@@ -79,14 +96,15 @@ const getCardValue = (player: Player, game: Game) => {
       if (player.value && player.value === -1) {
         return player.emoji || '☕'; // coffee emoji
       }
-      return getCardDisplayValue(player.value);
+      return getCardDisplayValue(game.gameType, player.value);
     }
-    return '🤔';
+    return isModerator(game.createdById, player.id) ? '👑' : '💤';
   }
 };
 
 const getCardDisplayValue = (
-  cardValue: number | undefined
+  gameType: GameType | undefined,
+  cardValue: number | undefined,
 ): string | number | undefined => {
-  return fibonacciCards.find((card) => card.value === cardValue)?.displayValue || cardValue;
+  return getCards(gameType).find((card) => card.value === cardValue)?.displayValue || cardValue;
 };

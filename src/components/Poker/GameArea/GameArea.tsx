@@ -5,7 +5,7 @@ import { CardPicker } from '../../Players/CardPicker/CardPicker';
 import { Players } from '../../Players/Players';
 import { GameController } from '../GameController/GameController';
 import './GameArea.css';
-import { isModerator } from '../../../utils/isModerator';
+import { isModerator as checkIsModerator } from '../../../utils/isModerator';
 import Grid from '@material-ui/core/Grid';
 
 interface GameAreaProps {
@@ -14,6 +14,9 @@ interface GameAreaProps {
   currentPlayerId: string;
 }
 export const GameArea: React.FC<GameAreaProps> = ({ game, players, currentPlayerId }) => {
+  const isModerator = checkIsModerator(game.createdById, currentPlayerId);
+  const canVote = !isModerator || (isModerator && game.canModeratorVote);
+
   return (
     <Grid container justify='center' alignItems='center' alignContent='center' direction='column'>
       <Grid item>
@@ -21,9 +24,7 @@ export const GameArea: React.FC<GameAreaProps> = ({ game, players, currentPlayer
         <GameController game={game} currentPlayerId={currentPlayerId} />
       </Grid>
       <Grid item>
-        {!isModerator(game.createdById, currentPlayerId) &&
-          <CardPicker game={game} players={players} currentPlayerId={currentPlayerId} />
-        }
+        {canVote && <CardPicker game={game} players={players} currentPlayerId={currentPlayerId} />}
       </Grid>
     </Grid>
   );

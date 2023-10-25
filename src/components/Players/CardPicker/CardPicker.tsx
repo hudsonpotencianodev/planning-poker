@@ -4,7 +4,7 @@ import { updatePlayerValue } from '../../../service/players';
 import { Game } from '../../../types/game';
 import { Player } from '../../../types/player';
 import { Status } from '../../../types/status';
-import { CardConfig, fibonacciCards, getRandomEmoji } from './CardConfigs';
+import { CardConfig, getCards, getRandomEmoji } from './CardConfigs';
 import './CardPicker.css';
 
 interface CardPickerProps {
@@ -14,7 +14,7 @@ interface CardPickerProps {
 }
 export const CardPicker: React.FC<CardPickerProps> = ({ game, players, currentPlayerId }) => {
   const [randomEmoji, setRandomEmoji] = useState(getRandomEmoji);
-  
+
   const playPlayer = (gameId: string, playerId: string, card: CardConfig) => {
     if (game.gameStatus !== Status.Finished) {
       updatePlayerValue(gameId, playerId, card.value, randomEmoji);
@@ -27,12 +27,14 @@ export const CardPicker: React.FC<CardPickerProps> = ({ game, players, currentPl
     }
   }, [game.gameStatus]);
 
+  const cards = getCards(game.gameType);
+
   return (
     <Grow in={true} timeout={1000}>
       <div>
         <div className='CardPickerContainer'>
           <Grid container spacing={4} justify='center'>
-            {fibonacciCards.map((card: CardConfig, index) => (
+            {cards.map((card: CardConfig, index) => (
               <Grid key={card.value} item xs>
                 <Slide in={true} direction={'right'} timeout={(300 * index) / 2}>
                   <Card
@@ -62,11 +64,6 @@ export const CardPicker: React.FC<CardPickerProps> = ({ game, players, currentPl
                       {card.value === -1 && (
                         <Typography className='CardContentMiddle' variant='h3'>
                           {randomEmoji}
-                        </Typography>
-                      )}
-                      {card.value === -2 && (
-                        <Typography className='CardContentMiddle' variant='h3'>
-                          ❓
                         </Typography>
                       )}
                     </CardContent>

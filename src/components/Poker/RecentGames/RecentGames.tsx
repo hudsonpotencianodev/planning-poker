@@ -2,6 +2,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CircularProgress,
   Grow,
   Table,
   TableBody,
@@ -66,10 +67,10 @@ export const RecentGames = () => {
       <Card variant='outlined' className='RecentGamesCard'>
         <CardHeader
           title={t('HomePage.heroSection.recentSession')}
-          titleTypographyProps={{ variant: 'h6', noWrap: true }}
+          titleTypographyProps={{ variant: 'h4', noWrap: true }}
         />
         <CardContent>
-          {isEmptyRecentGames() && <Typography variant='body2'>No recent sessions found</Typography>}
+          {isEmptyRecentGames() && <CircularProgress />}
           {recentGames && recentGames.length > 0 && (
             <TableContainer>
               <Table stickyHeader>
@@ -91,7 +92,10 @@ export const RecentGames = () => {
                         >
                           <TableCell>{recentGame.name}</TableCell>
                           <TableCell align='left'>{recentGame.createdBy}</TableCell>
-                          {isModerator(recentGame.createdById, getCurrentPlayerId(recentGame.id)) ? (
+                          {isModerator(
+                            recentGame.createdById,
+                            getCurrentPlayerId(recentGame.id),
+                          ) ? (
                             <TableCell align='center' onClick={(e) => e.stopPropagation()}>
                               <AlertDialog
                                 title='Remove recent game'
@@ -105,7 +109,7 @@ export const RecentGames = () => {
                             <TableCell align='left'></TableCell>
                           )}
                         </TableRow>
-                      )
+                      ),
                   )}
                 </TableBody>
               </Table>

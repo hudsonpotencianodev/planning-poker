@@ -12,6 +12,7 @@ import {
 import * as fb from '../repository/firebase';
 import * as players from './players';
 import { Status } from '../types/status';
+import { GameType } from '../types/game';
 
 jest.mock('../repository/firebase', () => ({
   addGameToStore: jest.fn(),
@@ -52,7 +53,7 @@ describe('games service', () => {
   finishedPlayers[2].status = Status.Finished;
 
   it('should store the new game info in the DB', async () => {
-    const fakeGame = { name: 'cherries', createdBy: 'Santa', createdAt: new Date() };
+    const fakeGame = { name: 'cherries',gameType: GameType.Fibonacci, createdBy: 'Santa', createdAt: new Date() };
     const resPlayer = { name: fakeGame.createdBy, id: mockUlid, status: Status.NotStarted };
     const resGame = { ...fakeGame, id: mockUlid, createdById: mockUlid, gameStatus: Status.Started };
     const gameSpy = jest.spyOn(fb, 'addGameToStore');

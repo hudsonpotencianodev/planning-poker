@@ -3,18 +3,27 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader, Grid, Grow, TextField
+  CardHeader,
+  Checkbox,
+  FormControlLabel,
+  Grow,
+  Radio,
+  RadioGroup,
+  TextField,
+  Divider,
 } from '@material-ui/core';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { addNewGame } from '../../../service/games';
-import { NewGame } from '../../../types/game';
+import { GameType, NewGame } from '../../../types/game';
 import './CreateGame.css';
 import { useTranslation } from 'react-i18next';
 
 export const CreateGame = () => {
   const history = useHistory();
   const [gameName, setGameName] = useState('');
+  const [canModeratorVote, setCanModeratorVote] = useState(false);
+  const [gameType, setGameType] = useState(GameType.ShortFibonacci);
   const [createdBy, setCreatedBy] = useState('');
   const [hasDefaults, setHasDefaults] = useState({ game: true, name: true });
   const [loading, setLoading] = useState(false);
@@ -27,6 +36,8 @@ export const CreateGame = () => {
       name: gameName,
       createdBy: createdBy,
       createdAt: new Date(),
+      gameType: gameType,
+      canModeratorVote: canModeratorVote,
     };
     const newGameId = await addNewGame(game);
     if (newGameId) {
@@ -84,6 +95,38 @@ export const CreateGame = () => {
               variant='outlined'
               onChange={(event: ChangeEvent<HTMLInputElement>) => setCreatedBy(event.target.value)}
             />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={canModeratorVote}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    setCanModeratorVote(event.target.checked)
+                  }
+                />
+              }
+              label='Allow Moderator Voting'
+            />
+            <Divider />
+            <RadioGroup
+              value={gameType}
+              onChange={(
+                event: ChangeEvent<{
+                  name?: string | undefined;
+                  value: any;
+                }>,
+              ) => setGameType(event.target.value)}
+            >
+              <FormControlLabel
+                value={GameType.ShortFibonacci}
+                control={<Radio color='primary' size='small' />}
+                label='Short Fibonacci (1, 2, 3, 5, 8, 13)'
+              />
+              <FormControlLabel
+                value={GameType.Fibonacci}
+                control={<Radio color='primary' size='small' />}
+                label='Fibonacci (0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)'
+              />
+            </RadioGroup>
           </CardContent>
           <CardActions>
             <Button

@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import * as playersService from '../../../service/players';
-import { Game } from '../../../types/game';
+import { Game, GameType } from '../../../types/game';
 import { Player } from '../../../types/player';
 import { Status } from '../../../types/status';
 import { CardPicker } from './CardPicker';
@@ -28,7 +28,7 @@ describe('CardPicker component', () => {
   it('should display correct card values', () => {
     const view = render(<CardPicker game={mockGame} players={mockPlayers} currentPlayerId={currentPlayerId} />);
 
-    cardConfigs.fibonacciCards
+    cardConfigs.getCards()
       .filter((a) => a.value >= 0)
       .forEach((card) => {
         const cardElement = view.container.querySelector(`#card-${card.displayValue}`);

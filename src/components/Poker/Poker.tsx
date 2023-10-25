@@ -18,19 +18,19 @@ export const Poker = () => {
 
   useEffect(() => {
     let effectCleanup = true;
-    
-    if(effectCleanup) {
+
+    if (effectCleanup) {
       const currentPlayerId = getCurrentPlayerId(id);
       if (!currentPlayerId) {
         history.push(`/join/${id}`);
       }
-      
+
       setCurrentPlayerId(currentPlayerId);
       setIsLoading(true);
     }
-    
+
     streamGame(id).onSnapshot((snapshot) => {
-      if(effectCleanup) {
+      if (effectCleanup) {
         if (snapshot.exists) {
           const data = snapshot.data();
           if (data) {
@@ -44,7 +44,7 @@ export const Poker = () => {
     });
 
     streamPlayers(id).onSnapshot((snapshot) => {
-      if(effectCleanup) {
+      if (effectCleanup) {
         const players: Player[] = [];
         snapshot.forEach((snapshot) => {
           players.push(snapshot.data() as Player);
@@ -57,7 +57,9 @@ export const Poker = () => {
       }
     });
 
-    return () => {effectCleanup = false};
+    return () => {
+      effectCleanup = false;
+    };
   }, [id, history]);
 
   if (loading) {
@@ -73,7 +75,7 @@ export const Poker = () => {
       {game && players && currentPlayerId ? (
         <GameArea game={game} players={players} currentPlayerId={currentPlayerId} />
       ) : (
-        <Typography>Game not found</Typography>
+        <CircularProgress />
       )}
     </>
   );
