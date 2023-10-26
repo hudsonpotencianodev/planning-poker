@@ -70,7 +70,9 @@ export const RecentGames = () => {
           titleTypographyProps={{ variant: 'h4', noWrap: true }}
         />
         <CardContent>
-          {isEmptyRecentGames() && <CircularProgress />}
+          {isEmptyRecentGames() && (
+            <Typography variant='body2'>No recent sessions found</Typography>
+          )}
           {recentGames && recentGames.length > 0 && (
             <TableContainer>
               <Table stickyHeader>
