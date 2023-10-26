@@ -2,5 +2,11 @@
   box-shadow: var(--color-card-boxshadow);
   padding: 10px;
   border-radius: 15px;
-  width: 500px;
+}
+
+/* todo: use breakpoints */
+@media (min-width: 600px) {
+  .CreateGameCard {
+    width: 500px;
+  }
 }

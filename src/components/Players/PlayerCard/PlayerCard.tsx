@@ -8,7 +8,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForeverTwoTone';
 import { red } from '@material-ui/core/colors';
 import { removePlayer } from '../../../service/players';
 import { isModerator } from '../../../utils/isModerator';
-import { emptyVoteValue, getCards } from '../CardPicker/CardConfigs';
+import { getCards } from '../CardPicker/CardConfigs';
 
 interface PlayerCardProps {
   game: Game;
@@ -21,12 +21,15 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({ game, player, currentPla
     removePlayer(gameId, playerId);
   };
 
+  const cardValue = getCardValue(player, game);
+
   return (
     <Card
       variant='outlined'
       className='PlayerCard'
       style={{
         backgroundColor: getCardColor(game, player.value),
+        display: cardValue ? 'block' : 'none'
       }}
     >
       <CardHeader
@@ -56,7 +59,7 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({ game, player, currentPla
             opacity: getCardOpacity(player, game),
           }}
         >
-          {getCardValue(player, game)}
+          {cardValue}
         </Typography>
       </CardContent>
     </Card>
@@ -98,7 +101,7 @@ const getCardValue = (player: Player, game: Game) => {
       }
       return getCardDisplayValue(game.gameType, player.value);
     }
-    return isModerator(game.createdById, player.id) ? '👑' : '💤';
+    return isModerator(game.createdById, player.id) ? '👑' : undefined;
   }
 };
 

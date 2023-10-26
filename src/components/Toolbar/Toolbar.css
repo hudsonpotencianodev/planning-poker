@@ -17,8 +17,9 @@
   cursor: pointer;
 }
 
-.HeaderIcon {
-  color: var(--color-primary);
+.Logo {
+  object-fit: contain;
+  width: 28px;
   margin-top: 4px;
   margin-right: 10px;
 }

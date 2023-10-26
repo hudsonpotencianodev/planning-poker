@@ -2,7 +2,6 @@ import { Slide, useMediaQuery } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import AppToolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import GamesIcon from '@material-ui/icons/Games';
 import { useHistory } from 'react-router-dom';
 import './Toolbar.css';
 import { useTranslation } from 'react-i18next';
@@ -20,14 +19,12 @@ export const Toolbar = () => {
         <AppToolbar>
           <div className='HeaderContainer'>
             <div className='HeaderLeftContainer' onClick={() => history.push('/')}>
-              <GamesIcon className='HeaderIcon' />
+              <img src={'/logo192.png'} className='Logo' alt='logo' />
               <Typography variant={isSmallScreen ? 'subtitle1' : 'h5'} color='primary' noWrap>
                 {title}
               </Typography>
             </div>
-            <div>
-              {!isSmallScreen && <LanguageControl />}
-            </div>
+            <div>{!isSmallScreen && <LanguageControl />}</div>
           </div>
         </AppToolbar>
       </AppBar>

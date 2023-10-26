@@ -1,4 +1,14 @@
-import { Button, Card, CardActions, CardContent, CardHeader, Grow, TextField, Snackbar, Grid } from '@material-ui/core';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Grow,
+  TextField,
+  Snackbar,
+  Grid,
+} from '@material-ui/core';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { getGame } from '../../../service/games';
@@ -22,7 +32,7 @@ export const JoinGame = () => {
         if (await getGame(joinGameId)) {
           setIsGameFound(true);
           if (await isCurrentPlayerInGame(joinGameId)) {
-            // history.push(`/game/${joinGameId}`);
+            history.push(`/game/${joinGameId}`);
             setLoading(false);
           } else {
             setLoading(false);
@@ -31,7 +41,7 @@ export const JoinGame = () => {
           setShowNotExistMessage(true);
           setTimeout(() => {
             history.push('/');
-          }, 5000)
+          }, 5000);
         }
       }
     }
@@ -73,7 +83,9 @@ export const JoinGame = () => {
                 placeholder='xyz...'
                 defaultValue={joinGameId}
                 variant='outlined'
-                onChange={(event: ChangeEvent<HTMLInputElement>) => setJoinGameId(event.target.value)}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  setJoinGameId(event.target.value)
+                }
               />
               <TextField
                 className='JoinGameTextField'
@@ -83,11 +95,19 @@ export const JoinGame = () => {
                 placeholder='Enter your name'
                 defaultValue={playerName}
                 variant='outlined'
-                onChange={(event: ChangeEvent<HTMLInputElement>) => setPlayerName(event.target.value)}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  setPlayerName(event.target.value)
+                }
               />
             </CardContent>
             <CardActions className='JoinGameCardAction'>
-              <Button type='submit' variant='contained' color='primary' className='JoinGameButton' disabled={loading}>
+              <Button
+                type='submit'
+                variant='contained'
+                color='primary'
+                className='JoinGameButton'
+                disabled={loading}
+              >
                 Join
               </Button>
             </CardActions>

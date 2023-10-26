@@ -13,16 +13,7 @@
   transform: none;
 }
 
-.HomePageImage {
-  width: 500px;
-  height: auto;
-}
-
 @media (max-width: 480px) {
-  .HomePageImage {
-    width: 100%;
-  }
-
   .SessionImage {
     width: 100%;
   }
